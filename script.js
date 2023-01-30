@@ -1,7 +1,7 @@
 let convertBtn = document.querySelector(".buttonConv");
 const apikey = 'aDkI4hIBlTljjBTvKq0ot0Rkq62UHaOI';
 
-getSymbols();
+fillSelect();
 
 convertBtn.onclick = (e)=>{
     let from = inputFrom.value;
@@ -40,5 +40,15 @@ async function getSymbols(){
     let symbols = await fetch(`https://api.apilayer.com/fixer/symbols`, requestOptions)
         .then(response => response.json());
     symbols = Object.keys(symbols.symbols);
-    console.log(symbols);
+    return symbols;
+}
+function fillSelect(){
+    let arr = getSymbols();
+    let selectFrom = document.querySelector("#fromSelect");
+    for (let i = 0; i < arr.length; i++) {
+        let option = document.createElement("option");
+        let txt = document.createTextNode(arr[i]);
+        option.append(txt);
+        selectFrom.insertBefore(option,selectFrom.lastChild)
+    }
 }
